@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+
 
 def send_email(to_email, subject, body):
 
@@ -33,7 +35,7 @@ A new task has been assigned to you by {assigner_name} ({assigner_email}).
 
 Task: {task_title}
 
-Please login to TaskFlow to view details.
+Please login to TaskFlow to view details: {FRONTEND_URL}/dashboard
 """
 
     send_email(recipient_email, subject, body)
@@ -53,6 +55,8 @@ Hello,
 The following task has been completed by {assignee_name}:
 
 Task: {task_title}
+
+View it here: {FRONTEND_URL}/dashboard
 
 Regards,
 TaskFlow
