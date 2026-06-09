@@ -171,7 +171,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-white relative overflow-hidden font-sans selection:bg-[#8b5cf6]/30 pb-20">
-      {/* Dynamic Backgrounds */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[150px] animate-pulse-slow mix-blend-screen" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/20 rounded-full blur-[150px] animate-pulse-slow mix-blend-screen" style={{ animationDelay: '2s' }} />
@@ -180,7 +179,6 @@ export default function DashboardPage() {
       
       <div className="relative z-10 mx-auto max-w-7xl p-6 lg:p-10 animate-fade-in">
         
-        {/* Header Navigation Island */}
         <div className="mb-12 rounded-full p-4 pl-6 pr-4 bg-[#0f172a]/80 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between border border-white/10 shadow-2xl shadow-black/50">
           <div className="flex items-center gap-4 mb-4 md:mb-0">
             {currentUser && (
@@ -221,7 +219,6 @@ export default function DashboardPage() {
 
         <div className="grid gap-8 lg:grid-cols-12 mb-12">
           
-          {/* Create Task Section */}
           <div className="lg:col-span-8 bg-[#0f172a]/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6]"></div>
             
@@ -287,7 +284,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Team Members Section */}
           <div className="lg:col-span-4 bg-[#0f172a]/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col relative overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-400"></div>
             <h2 className="mb-6 text-xl font-extrabold flex items-center gap-3 text-white">
@@ -328,7 +324,6 @@ export default function DashboardPage() {
 
         </div>
 
-        {/* Tasks List Section */}
         <div className="bg-[#0f172a]/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
@@ -354,7 +349,6 @@ export default function DashboardPage() {
                   key={task.id}
                   className="group rounded-3xl border border-white/10 bg-black/40 p-6 hover:bg-[#0f172a] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:border-white/20 transition-all duration-300 flex flex-col h-full relative overflow-hidden"
                 >
-                  {/* Status Indicator Bar */}
                   <div className={`absolute top-0 left-0 w-full h-1 ${task.status === 'completed' ? 'bg-gradient-to-r from-emerald-400 to-teal-400' : 'bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6]'}`}></div>
                   
                   <div className="flex justify-between items-start mb-4 gap-4">

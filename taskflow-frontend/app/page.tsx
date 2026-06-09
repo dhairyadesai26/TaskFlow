@@ -25,7 +25,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-foreground font-sans selection:bg-primary/30">
-      {/* Dynamic Backgrounds */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[150px] animate-pulse-slow mix-blend-screen" />
         <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-accent/20 rounded-full blur-[150px] animate-pulse-slow mix-blend-screen" style={{ animationDelay: '2s' }} />
@@ -33,7 +32,6 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-overlay"></div>
       </div>
 
-      {/* Floating Navbar */}
       <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
         <div className="container mx-auto px-6 max-w-6xl">
           <div className={`flex items-center justify-between rounded-full px-6 py-3 transition-all duration-500 ${scrolled ? 'bg-card/70 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50' : 'bg-transparent'}`}>
@@ -57,7 +55,6 @@ export default function Home() {
       <main className="relative z-10 pt-32 pb-20">
         <div className="container mx-auto px-6 max-w-6xl">
           
-          {/* Hero Content */}
           <div className="flex flex-col items-center text-center mt-12 mb-20 animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 mb-8 shadow-xl">
               <span className="relative flex h-2.5 w-2.5">
@@ -101,10 +98,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Visual Showcase (Floating Cards) */}
           <div className="relative mt-20 w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4 sm:px-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             
-            {/* Left Floating Card */}
             <div className="hidden md:flex flex-col w-[280px] glass-panel rounded-2xl p-6 z-10 border border-white/10 opacity-80 hover:opacity-100 transition-opacity animate-float translate-y-8" style={{ animationDelay: '1s' }}>
                <div className="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
@@ -115,7 +110,6 @@ export default function Home() {
                <p className="text-sm text-gray-300 leading-relaxed italic">"Hey team, the new design drafts are ready for review. Please check them out."</p>
             </div>
 
-            {/* Center Main Card */}
             <div className="w-full sm:w-[500px] glass-panel rounded-3xl p-6 sm:p-8 z-20 border border-white/20 shadow-2xl shadow-primary/20 bg-[#0f172a]/90 backdrop-blur-2xl relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl pointer-events-none"></div>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 border-b border-white/10 pb-5 gap-4">
@@ -141,7 +135,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Floating Card */}
             <div className="hidden md:flex flex-col w-[280px] glass-panel rounded-2xl p-6 z-10 border border-white/10 opacity-80 hover:opacity-100 transition-opacity animate-float -translate-y-8" style={{ animationDelay: '0s' }}>
               <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
                 <h4 className="text-sm font-bold text-white">Team Velocity</h4>
@@ -159,7 +152,6 @@ export default function Home() {
         </div>
       </main>
       
-      {/* Footer Banner */}
       <div className="border-t border-white/10 bg-black/20 backdrop-blur-md py-12 relative z-10">
         <div className="container mx-auto px-6 max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div className="space-y-2">
