@@ -1,5 +1,6 @@
 import os
 import smtplib
+import time
 
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
@@ -20,10 +21,19 @@ def send_email(to_email, subject, body):
     msg["From"] = sender
     msg["To"] = to_email
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
-        server.login(sender, password)
-        server.send_message(msg)
+    for attempt in range(3):
+        try:
+            with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
+                server.starttls()
+                server.login(sender, password)
+                server.send_message(msg)
+            print(f"Email sent successfully to {to_email} on attempt {attempt+1}")
+            return
+        except Exception as e:
+            print(f"SMTP error on attempt {attempt+1}: {e}")
+            if attempt == 2:
+                raise
+            time.sleep(2)
 
 
 def send_task_assigned_email(recipient_email, task_title, assigner_name, assigner_email):
