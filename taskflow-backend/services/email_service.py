@@ -1,35 +1,40 @@
 import os
-import smtplib
+import requests
 import time
-
-from email.mime.text import MIMEText
 from dotenv import load_dotenv
 
 load_dotenv()
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
-
 def send_email(to_email, subject, body):
+    api_key = os.getenv("BREVO_API_KEY")
+    sender_email = os.getenv("GMAIL_EMAIL")
 
-    sender = os.getenv("GMAIL_EMAIL")
-    password = os.getenv("GMAIL_APP_PASSWORD")
-
-    msg = MIMEText(body)
-
-    msg["Subject"] = subject
-    msg["From"] = sender
-    msg["To"] = to_email
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "accept": "application/json",
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+    
+    payload = {
+        "sender": {"email": sender_email, "name": "TaskFlow App"},
+        "to": [{"email": to_email}],
+        "subject": subject,
+        "htmlContent": f"<p>{body.replace(chr(10), '<br>')}</p>"
+    }
 
     for attempt in range(3):
         try:
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10) as server:
-                server.login(sender, password)
-                server.send_message(msg)
-            print(f"Email sent successfully to {to_email} on attempt {attempt+1}")
+            response = requests.post(url, json=payload, headers=headers, timeout=10)
+            response.raise_for_status()
+            print(f"Email sent successfully via Brevo to {to_email} on attempt {attempt+1}")
             return
         except Exception as e:
-            print(f"SMTP error on attempt {attempt+1}: {e}")
+            print(f"Brevo API error on attempt {attempt+1}: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                print("Response text:", e.response.text)
             if attempt == 2:
                 raise
             time.sleep(2)
@@ -46,7 +51,6 @@ Task: {task_title}
 
 Please login to TaskFlow to view details: {FRONTEND_URL}/dashboard
 """
-
     send_email(recipient_email, subject, body)
 
 
@@ -55,9 +59,7 @@ def send_task_completed_email(
     task_title,
     assignee_name
 ):
-
     subject = "Task Completed"
-
     body = f"""
 Hello,
 
@@ -70,9 +72,4 @@ View it here: {FRONTEND_URL}/dashboard
 Regards,
 TaskFlow
 """
-
-    send_email(
-        recipient_email,
-        subject,
-        body
-    )
+    send_email(recipient_email, subject, body)

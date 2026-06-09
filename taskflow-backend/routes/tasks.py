@@ -5,7 +5,7 @@ from datetime import datetime
 
 from utils.supabase_client import supabase
 
-from services.gmail_service import (
+from services.email_service import (
     send_task_assigned_email,
     send_task_completed_email,
 )
