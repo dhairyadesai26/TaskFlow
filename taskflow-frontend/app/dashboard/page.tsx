@@ -110,7 +110,8 @@ export default function DashboardPage() {
       setDescription("");
       setAssignedTo("");
 
-      fetchTasks();
+      await fetchTasks();
+      alert("Task created successfully!");
     } catch (error) {
       console.error(error);
     }
@@ -119,7 +120,8 @@ export default function DashboardPage() {
   const completeTask = async (taskId: string) => {
     try {
       await api.patch(`/tasks/${taskId}/complete`);
-      fetchTasks();
+      await fetchTasks();
+      alert("Task completed successfully!");
     } catch (error) {
       console.error(error);
     }
@@ -128,7 +130,8 @@ export default function DashboardPage() {
   const deleteTask = async (taskId: string) => {
     try {
       await api.delete(`/tasks/${taskId}`);
-      fetchTasks();
+      await fetchTasks();
+      alert("Task deleted successfully!");
     } catch (error) {
       console.error(error);
     }
