@@ -1,3 +1,4 @@
+import threading
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 
@@ -87,12 +88,15 @@ def create_task():
             )
 
             if assigned_user.data and creator_user.data:
-                send_task_assigned_email(
-                    assigned_user.data["email"],
-                    title,
-                    creator_user.data.get("full_name", "Unknown"),
-                    creator_user.data.get("email", "Unknown"),
-                )
+                threading.Thread(
+                    target=send_task_assigned_email,
+                    args=(
+                        assigned_user.data["email"],
+                        title,
+                        creator_user.data.get("full_name", "Unknown"),
+                        creator_user.data.get("email", "Unknown"),
+                    )
+                ).start()
 
         except Exception as email_error:
             print("Assignment email failed:", email_error)
@@ -153,11 +157,14 @@ def complete_task(task_id):
             )
 
             if creator.data and assignee.data:
-                send_task_completed_email(
-                    creator.data["email"],
-                    task["title"],
-                    assignee.data.get("full_name", "Unknown"),
-                )
+                threading.Thread(
+                    target=send_task_completed_email,
+                    args=(
+                        creator.data["email"],
+                        task["title"],
+                        assignee.data.get("full_name", "Unknown"),
+                    )
+                ).start()
 
         except Exception as email_error:
             print("Completion email failed:", email_error)
