@@ -1,4 +1,5 @@
 import threading
+import traceback
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 
@@ -10,6 +11,17 @@ from services.gmail_service import (
 )
 
 task_bp = Blueprint("tasks", __name__)
+
+def run_in_background(target, *args):
+    def wrapper():
+        try:
+            print(f"Starting background task: {target.__name__}")
+            target(*args)
+            print(f"Successfully completed background task: {target.__name__}")
+        except Exception as e:
+            print(f"ERROR in background task {target.__name__}: {str(e)}")
+            traceback.print_exc()
+    threading.Thread(target=wrapper).start()
 
 
 # ==========================
@@ -88,15 +100,13 @@ def create_task():
             )
 
             if assigned_user.data and creator_user.data:
-                threading.Thread(
-                    target=send_task_assigned_email,
-                    args=(
-                        assigned_user.data["email"],
-                        title,
-                        creator_user.data.get("full_name", "Unknown"),
-                        creator_user.data.get("email", "Unknown"),
-                    )
-                ).start()
+                run_in_background(
+                    send_task_assigned_email,
+                    assigned_user.data["email"],
+                    title,
+                    creator_user.data.get("full_name", "Unknown"),
+                    creator_user.data.get("email", "Unknown")
+                )
 
         except Exception as email_error:
             print("Assignment email failed:", email_error)
@@ -157,14 +167,12 @@ def complete_task(task_id):
             )
 
             if creator.data and assignee.data:
-                threading.Thread(
-                    target=send_task_completed_email,
-                    args=(
-                        creator.data["email"],
-                        task["title"],
-                        assignee.data.get("full_name", "Unknown"),
-                    )
-                ).start()
+                run_in_background(
+                    send_task_completed_email,
+                    creator.data["email"],
+                    task["title"],
+                    assignee.data.get("full_name", "Unknown")
+                )
 
         except Exception as email_error:
             print("Completion email failed:", email_error)
