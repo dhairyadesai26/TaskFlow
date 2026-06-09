@@ -23,8 +23,7 @@ def send_email(to_email, subject, body):
 
     for attempt in range(3):
         try:
-            with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
-                server.starttls()
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10) as server:
                 server.login(sender, password)
                 server.send_message(msg)
             print(f"Email sent successfully to {to_email} on attempt {attempt+1}")
