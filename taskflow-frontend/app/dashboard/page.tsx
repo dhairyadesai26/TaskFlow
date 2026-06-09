@@ -33,6 +33,21 @@ export default function DashboardPage() {
 
   useEffect(() => {
     initialize();
+
+    const channel = supabase
+      .channel('tasks-all')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tasks' },
+        () => {
+          fetchTasks();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const initialize = async () => {
