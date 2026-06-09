@@ -10,8 +10,8 @@ from routes.users import user_bp
 
 app = Flask(__name__)
 
-frontend_url = os.getenv("FRONTEND_URL", "*")
-CORS(app, origins=[frontend_url] if frontend_url != "*" else "*")
+frontend_url = os.getenv("FRONTEND_URL", "*").strip().rstrip("/")
+CORS(app, origins=[frontend_url] if frontend_url != "*" else "*", supports_credentials=True)
 
 app.register_blueprint(task_bp)
 app.register_blueprint(user_bp)
